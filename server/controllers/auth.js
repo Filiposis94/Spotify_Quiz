@@ -26,7 +26,7 @@ const getAuthUrl = async(req, res)=>{
         response_type: "code",
         client_id: spotify_client_id,
         scope: scope,
-        redirect_uri: "http://localhost:3000/",
+        redirect_uri: "https://spotify-quiz-mhri.onrender.com/",
         state: state
     })
     res.json('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
@@ -34,7 +34,7 @@ const getAuthUrl = async(req, res)=>{
 
 const getToken = async(req, res)=>{
     var code = req.query.code;
-    const formData = `code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("http://localhost:3000/")}&grant_type=authorization_code`;
+    const formData = `code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://spotify-quiz-mhri.onrender.com/")}&grant_type=authorization_code`;
     var authOptions = {
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
