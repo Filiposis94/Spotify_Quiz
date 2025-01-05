@@ -23,9 +23,21 @@ app.use(rateLimiter({
     max: 200, // Limit each IP to 200 requests per `window` (here, per 15 minutes)
 }));
 app.use(express.json());
-app.use(helmet());
 app.use(cors());
 app.use(xss());
+app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          "default-src": ["'self'"], // Restrict everything by default to 'self'
+          "script-src": ["'self'", "https://sdk.scdn.co"], // Allow Spotify SDK
+          "img-src": ["'self'", "https://mosaic.scdn.co", "data:"], // Allow Spotify images
+          "object-src": ["'none'"], // Disallow <object>, <embed>, etc.
+          // Add more directives as needed
+        },
+      },
+    })
+  );
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 // ROUTES
