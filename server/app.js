@@ -7,6 +7,7 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
+const path = require('path');
 // IMPORT ROUTERS AND MIDDLEWARES
 const authRouter = require('./routes/auth');
 const dataRouter = require('./routes/data');
