@@ -35,9 +35,7 @@ function WebPlayback(props) {
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
             });
-            console.log(player);
-            
-            
+                    
             player.addListener('player_state_changed', ( state => {
 
                 if (!state) {
