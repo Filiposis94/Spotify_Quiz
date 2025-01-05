@@ -1,0 +1,200 @@
+*{
+  box-sizing: border-box;
+}
+:root{
+  --color-main:#e9e500;
+  --color-secondary:white;
+  --color-bg:rgb(1, 24, 97);
+  --color-bg-lighter:rgb(31, 72, 204);
+  --ff-heading: 'Oswald', sans-serif;
+  --ff-main: 'Roboto', sans-serif;
+}
+/* GLOBAL */
+body{
+  background-color: var(--color-bg);
+  font-family: var(--ff-main);
+  color: var(--color-secondary);
+  text-align: center;
+}
+.container{
+  margin: 0 auto;
+  max-width: 1000px;
+  width: 80%;
+}
+h1{
+  margin-top: 0;
+}
+h3{
+  text-align: left;
+}
+p{
+  font-size: 20px;
+}
+label{
+  font-size: 20px;
+}
+.menu{
+  cursor: pointer;
+  margin-top: 0;
+}
+/* BUTTONS */
+.btn{
+  background-color: var(--color-main);
+  color: var(--color-bg);
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  
+}
+.btn-main{
+  box-shadow: 1px 3px rgb(104, 104, 104);
+  padding: 10px 50px;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.btn-main:active{
+  box-shadow: 1px 1px rgb(104, 104, 104);
+  transform: translateY(2px);
+}
+
+.btn-timer{
+  margin-right: 5px;
+}
+
+.btn-answer{
+  background-color: var(--color-bg-lighter);
+  color: var(--color-secondary);
+}
+
+.correct{
+  background-color: rgb(2, 243, 171);
+  color: var(--color-bg);
+}
+.wrong{
+  background-color: rgb(255, 107, 107);
+  color: var(--color-bg);
+}
+.resolved{
+  opacity: 0.5;
+}
+
+.icon{
+  vertical-align: sub;
+  margin-left: 5px;
+}
+
+/* UTILITY CLASSES */
+.left{
+  text-align: left;
+}
+
+/* WEBPLAYBACK */
+.webplayback{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-left: auto;
+  display: inline-block;
+  padding: 2px;
+}
+.webplayback-off{
+  background-color: red;
+}
+.webplayback-on{
+  background-color: green;
+}
+/* SETTINGS */
+form{
+  margin-bottom: 30px;
+}
+.radio-list{
+  text-align: left;
+}
+.radio-option{
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+.playlist-img{
+  max-width: 50px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+input{
+  accent-color: var(--color-main);
+}
+
+input[type=number]{
+  font-size: 16px;
+}
+input[type=radio]{
+  margin-right: 5px;
+}
+.tooltip{
+  position: relative;
+}
+.tooltip::after{
+  background-color: var(--color-bg-lighter);
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  font-size: 16px;
+  width: 150px;
+  padding: 5px 10px;
+  visibility: hidden;
+}
+.tooltip-1::after{
+  content: 'Select correct answer from 4 presented options.';
+}
+.tooltip-2::after{
+  content: 'Write your answer with the help of whisperer, while slowly increasing the playtime.';
+}
+.tooltip-3::after{
+  content: 'Write your answer like in a pubquiz. Check your answers at the end.';
+}
+.tooltip-4::after{
+  content: 'Match the author and the song title.';
+}
+.tooltip:hover::after{
+  visibility: visible;
+}
+
+/* PICK FROM 4, PUB QUIZ */
+.answers, .pq-answer{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+input[type=text]{
+  font-size: 20px;
+}
+
+.pq-answer-text{
+  background-color: var(--color-bg-lighter);
+}
+.match-row{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+
+
+/* MEDIA QUERIES */
+@media (min-width: 800px){
+.menu{
+  position: absolute;
+  top: 15px;
+}
+.radio-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.pq-answer{
+  display: block;
+}
+}
