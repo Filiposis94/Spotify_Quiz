@@ -32,8 +32,8 @@ app.use(
           "default-src": ["'self'"], // Restrict everything by default to 'self'
           "script-src": ["'self'", "https://sdk.scdn.co"], // Allow Spotify SDK
           "img-src": ["'self'", "https://mosaic.scdn.co", "data:"], // Allow Spotify images
+          "frame-src": ["'self'", "https://sdk.scdn.co"], // Allow framing Spotify SDK
           "object-src": ["'none'"], // Disallow <object>, <embed>, etc.
-          // Add more directives as needed
         },
       },
     })
