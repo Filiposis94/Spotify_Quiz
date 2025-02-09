@@ -79,9 +79,7 @@ function WebPlayback(props) {
         return (
          
             <div className='webplayback webplayback-on'>
-                        Active
-                    
-                
+                        Active      
                     <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
                         &lt;&lt;
                     </button>

@@ -2,6 +2,9 @@ const spotify_client_id = process.env.SPOTIFY_CLIENT_ID
 const spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET
 const axios = require('axios');
 
+const redirectUri = "https://spotify-quiz-mhri.onrender.com";
+// const redirectUri = "http://localhost:3000/";
+
 // Creating expiration Time
 Date.prototype.addHours = function(h){
     this.setHours(this.getHours()+h);
@@ -26,7 +29,7 @@ const getAuthUrl = async(req, res)=>{
         response_type: "code",
         client_id: spotify_client_id,
         scope: scope,
-        redirect_uri: "https://spotify-quiz-mhri.onrender.com",
+        redirect_uri: redirectUri,
         state: state
     })
     res.json('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
@@ -34,7 +37,7 @@ const getAuthUrl = async(req, res)=>{
 
 const getToken = async(req, res)=>{
     var code = req.query.code;
-    const formData = `code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://spotify-quiz-mhri.onrender.com")}&grant_type=authorization_code`;
+    const formData = `code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=authorization_code`;
     var authOptions = {
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',

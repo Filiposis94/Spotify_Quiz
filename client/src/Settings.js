@@ -26,7 +26,7 @@ function Settings(props){
                 <h2>Choose playlist</h2>
                 <h3>Your Playlists</h3>
                 <div className="radio-list">
-                {usersPlaylistsRadioButtons}
+                {usersPlaylistsRadioButtons.length>0 ? usersPlaylistsRadioButtons: <p>You have 0 playlists. Create one and refresh app.</p>}
                 </div>
                 <h2>Game settings</h2>
                 <h3>Game mode</h3>
