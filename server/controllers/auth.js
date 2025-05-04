@@ -1,6 +1,7 @@
 const spotify_client_id = process.env.SPOTIFY_CLIENT_ID
 const spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET
 const axios = require('axios');
+const crypto = require('crypto');
 
 const redirectUri = "https://spotify-quiz-mhri.onrender.com";
 // const redirectUri = "http://localhost:3000/";
@@ -12,23 +13,35 @@ Date.prototype.addHours = function(h){
 };
 
 
-const generateRandomString = function (length) {
-    var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
-    for (var i = 0; i < length; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
+const generateRandomString = (length) => {
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const bytes = crypto.randomBytes(length);
+    return Array.from(bytes).map(byte => possible[byte % possible.length]).join('');
 };
+const sha256 = (plain) => {
+    return crypto.createHash('sha256')
+                 .update(plain)
+                 .digest(); // Returns a Buffer containing the hash
+  };
+  const base64encode = (buffer) => {
+    return buffer.toString('base64') // Base64 encode
+                  .replace(/\+/g, '-') // Replace '+' with '-'
+                  .replace(/\//g, '_') // Replace '/' with '_'
+                  .replace(/=+$/, ''); // Remove '=' padding
+  };
+const codeVerifier  = generateRandomString(64);
 const getAuthUrl = async(req, res)=>{
-    var scope = "streaming user-read-email user-read-private";
-    var state = generateRandomString(16);
+    const scope = "streaming user-read-email user-read-private";
+    const state = generateRandomString(16);
+    const hashed = await sha256(codeVerifier)
+    const codeChallenge = base64encode(hashed);
 
-    var auth_query_parameters = new URLSearchParams({
+    const auth_query_parameters = new URLSearchParams({
         response_type: "code",
         client_id: spotify_client_id,
         scope: scope,
+        code_challenge_method: 'S256',
+        code_challenge: codeChallenge,
         redirect_uri: redirectUri,
         state: state
     })
@@ -37,7 +50,7 @@ const getAuthUrl = async(req, res)=>{
 
 const getToken = async(req, res)=>{
     var code = req.query.code;
-    const formData = `code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=authorization_code`;
+    const formData = `client_id=${spotify_client_id}&code_verifier=${codeVerifier}&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=authorization_code`;
     var authOptions = {
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
